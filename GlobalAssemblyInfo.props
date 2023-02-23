@@ -1,0 +1,13 @@
+<Project>
+    <PropertyGroup>
+        <Guid>D06291D7-7B5E-4A5C-8C73-3F79DCF98F41</Guid>
+        <Company>Primetec GmbH</Company>
+        <Authors>Karl Waldmannstetter</Authors>
+        <Copyright>© $([System.DateTime]::UtcNow.Year) Primetec GmbH</Copyright>
+        <Product>Primetec.Sample.NuGet1</Product>
+        <Title>Test NuGet deploy &amp; publish</Title>
+        <Description>Test NuGet deploy &amp; publish</Description>
+        <Version>0.0.1.0</Version>
+        <FileVersion>0.0.1.0</FileVersion>
+    </PropertyGroup>
+</Project>
