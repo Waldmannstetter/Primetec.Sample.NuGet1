@@ -7,7 +7,7 @@
         <Product>Primetec.Sample.NuGet1</Product>
         <Title>Test NuGet deploy &amp; publish</Title>
         <Description>Test NuGet deploy &amp; publish</Description>
-        <Version>0.0.4.0</Version>
-        <FileVersion>0.0.4.0</FileVersion>
+        <Version>0.0.5.0</Version>
+        <FileVersion>0.0.5.0</FileVersion>
     </PropertyGroup>
 </Project>

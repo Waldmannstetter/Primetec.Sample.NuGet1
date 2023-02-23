@@ -13,6 +13,12 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <PackageId>Primetec.Sample.NuGet1.Core</PackageId>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/Waldmannstetter/Primetec.Sample.NuGet1</RepositoryUrl>
+    </PropertyGroup>
+
     <ItemGroup>
         <None Include="Primetec.png" Pack="true" PackagePath="" />
         <None Include="..\README.md" Pack="true" PackagePath="">
@@ -52,6 +58,12 @@
             </AssemblyAttributes>
         </ItemGroup>
         <WriteCodeFragment Language="C#" OutputFile="./AssemblyInfo.cs" AssemblyAttributes="@(AssemblyAttributes)" />
+    </Target>
+
+    <Target Name="PrepareReleaseNotes" BeforeTargets="GenerateNuspec">
+        <PropertyGroup>
+            <PackageDescription>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../RELEASE-NOTES"))</PackageDescription>
+        </PropertyGroup>
     </Target>
 
 </Project>
