@@ -23,9 +23,9 @@ defaults:
     shell: pwsh
 
 jobs:
-  info:
-    - runs-on: ubuntu-latest
-      steps:
+  create_nuget:
+    runs-on: ubuntu-latest
+    steps:
       - name: Get files
         shell: bash
         run: |
@@ -34,10 +34,6 @@ jobs:
             outputFolder=${{ github.workspace }}/${{ env.ARTIFACT }}/$d
             ( cd "$d" && dotnet publish --no-self-contained -c $BUILD_CONFIGURATION -o $outputFolder )
           done
-          
-  create_nuget:
-    runs-on: ubuntu-latest
-    steps:
       - uses: actions/checkout@v3
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
