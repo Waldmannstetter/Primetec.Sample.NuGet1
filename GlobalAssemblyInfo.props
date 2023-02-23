@@ -7,7 +7,8 @@
         <Product>Primetec.Sample.NuGet1</Product>
         <Title>Test NuGet deploy &amp; publish</Title>
         <Description>Test NuGet deploy &amp; publish</Description>
-        <Version>0.0.6.0</Version>
-        <FileVersion>0.0.6.0</FileVersion>
+        <Deterministic>False</Deterministic>
+        <Version>0.0.7.$([System.DateTime]::UtcNow.ToString(HHmmf))</Version>
+        <FileVersion>$(Version)</FileVersion>
     </PropertyGroup>
 </Project>

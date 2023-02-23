@@ -24,9 +24,12 @@
         <None Include="..\README.md" Pack="true" PackagePath="">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Include="..\CHANGELOG.md" Pack="true" PackagePath="">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
-    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)' == 'Debug'">
         <ItemGroup>
             <AssemblyAttributes Include="ComVisible">
                 <_Parameter1>false</_Parameter1>
@@ -62,7 +65,7 @@
 
     <Target Name="PrepareReleaseNotes" BeforeTargets="GenerateNuspec">
         <PropertyGroup>
-            <PackageDescription>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../RELEASE-NOTES"))</PackageDescription>
+            <PackageDescription>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/CHANGELOG.md"))</PackageDescription>
         </PropertyGroup>
     </Target>
 
