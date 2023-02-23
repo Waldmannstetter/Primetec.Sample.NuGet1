@@ -26,18 +26,11 @@ jobs:
   create_nuget:
     runs-on: ubuntu-latest
     steps:
-      - name: Get files
-        shell: bash
-        run: |
-          for f in $(find ${{ github.workspace }} -name '*.csproj'); do
-            d=$(dirname  $f)
-            outputFolder=${{ github.workspace }}/${{ env.ARTIFACT }}/$d
-            ( cd "$d" && dotnet publish --no-self-contained -c $BUILD_CONFIGURATION -o $outputFolder )
-          done
       - uses: actions/checkout@v3
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
-      - run: dotnet pack ./Primetec.Sample.NuGet1/Primetec.Sample.NuGet1.Core.csproj --configuration Release --output ${{ env.NuGetDirectory }}
+      # - run: dotnet pack ./Primetec.Sample.NuGet1/Primetec.Sample.NuGet1.Core.csproj --configuration Release --output ${{ env.NuGetDirectory }}
+      - run: dotnet pack ~/Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj -p:NuspecFile=~/Primetec.Sample.NuGet1.Core/Primetec.nuspec -p:NuspecBasePath=${{ env.NuGetDirectory }}
       - uses: actions/upload-artifact@v3
         with:
           name: nuget
