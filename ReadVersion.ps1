@@ -27,7 +27,7 @@
         }
     }
 
-    $result >> $env:GITHUB_ENV
+    $result >> $Env:AssemblyVersion
     # $Env:AssemblyVersion = $result
 
     echo $result
