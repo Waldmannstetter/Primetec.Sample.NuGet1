@@ -29,6 +29,12 @@ jobs:
       - uses: actions/checkout@v3
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
+      - run: |
+          for f in $(find src -name '*.csproj'); do
+            d=$(dirname  $f)
+            outputFolder=${{ github.workspace }}/${{ env.ARTIFACT }}/$d
+            ( cd "$d" && dotnet publish --no-self-contained -c $BUILD_CONFIGURATION -o $outputFolder )
+          done
       - run: dotnet pack ./Primetec.Sample.NuGet1/Primetec.Sample.NuGet1.Core.csproj --configuration Release --output ${{ env.NuGetDirectory }}
       - uses: actions/upload-artifact@v3
         with:
