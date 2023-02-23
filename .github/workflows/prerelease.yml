@@ -2,8 +2,12 @@
 
 on:
   push:
-    tags:
-      - "v[0-9]+.[0-9]+.[0-9]+-preview[0-9][0-9][0-9]"
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,11 +15,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set VERSION variable from tag
-        run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
+      - name: Get assembly version
+        shell: pwsh
+        run: |
+          ./ReadVersion.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $false
+        env:
+          AssemblyVersion: ''
+
+      # - name: Set VERSION variable from tag
+        # run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
       - name: Pack
         # run: dotnet pack --configuration Release /p:Version=${VERSION} --output .
-        run: dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=${VERSION} --output ${{ env.NuGetDirectory }}
+        run: dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=${AssemblyVersion} --output -prerelease ${{ env.NuGetDirectory }}
       - name: Push
         # run: dotnet nuget push NuGet.Workflow.${VERSION}.nupkg --source https://nuget.pkg.github.com/acraven/index.json --api-key ${GITHUB_TOKEN}
         run: |

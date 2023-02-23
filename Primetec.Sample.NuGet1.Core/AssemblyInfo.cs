@@ -17,8 +17,8 @@ using System.Reflection;
 [assembly: AssemblyProduct("Primetec.Sample.NuGet1")]
 [assembly: AssemblyTitle("Test NuGet deploy & publish")]
 [assembly: AssemblyDescription("Test NuGet deploy & publish")]
-[assembly: AssemblyVersion("0.0.6.0")]
-[assembly: AssemblyFileVersion("0.0.6.0")]
+[assembly: AssemblyVersion("0.0.7.13017")]
+[assembly: AssemblyFileVersion("0.0.7.13013")]
 
 // Von der MSBuild WriteCodeFragment-Klasse generiert.
 
