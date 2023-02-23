@@ -20,7 +20,7 @@ jobs:
         run: |
           ./ReadVersion.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $false
         env:
-          AssemblyVersion: ''
+          AssemblyVersion: '0.0.0.1'
 
       # - name: Set VERSION variable from tag
         # run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
