@@ -38,7 +38,7 @@ jobs:
         uses: actions/setup-dotnet@v3
       - run: |
           ./ReadVersion.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $false
-      - run: dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=${{ env.AssemblyVersion }} --output ${{ env.NuGetDirectory }}
+      - run: dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=${{ env.AssemblyVersion }} /p:FileVersion=${{ env.AssemblyVersion }} --output ${{ env.NuGetDirectory }}
       - uses: actions/upload-artifact@v3
         with:
           name: nuget
