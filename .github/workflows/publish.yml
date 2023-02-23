@@ -30,7 +30,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
       # - run: dotnet pack ./Primetec.Sample.NuGet1/Primetec.Sample.NuGet1.Core.csproj --configuration Release --output ${{ env.NuGetDirectory }}
-      - run: dotnet pack ~/Primetec.Sample.NuGet1/Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj -p:NuspecFile=~/Primetec.Sample.NuGet1/Primetec.Sample.NuGet1.Core/Primetec.nuspec -p:NuspecBasePath=${{ env.NuGetDirectory }}
+      - run: dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj -p:NuspecFile=./Primetec.Sample.NuGet1.Core/Primetec.nuspec -p:NuspecBasePath=${{ env.NuGetDirectory }}
       - uses: actions/upload-artifact@v3
         with:
           name: nuget
