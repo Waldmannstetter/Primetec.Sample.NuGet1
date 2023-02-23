@@ -27,7 +27,8 @@
         }
     }
 
-    $Env:AssemblyVersion = $result
+    $result >> $env:GITHUB_ENV
+    # $Env:AssemblyVersion = $result
 
-    Write-Host $result
+    echo $result
 }
