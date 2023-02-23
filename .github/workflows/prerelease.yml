@@ -26,7 +26,7 @@ jobs:
         # run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
       - name: Pack
         # run: dotnet pack --configuration Release /p:Version=${VERSION} --output .
-        run: dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=${{ env.AssemblyVersion }} --output -prerelease ${{ env.NuGetDirectory }}
+        run: dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=$AssemblyVersion --output -prerelease ${{ env.NuGetDirectory }}
       - name: Push
         # run: dotnet nuget push NuGet.Workflow.${VERSION}.nupkg --source https://nuget.pkg.github.com/acraven/index.json --api-key ${GITHUB_TOKEN}
         run: |
