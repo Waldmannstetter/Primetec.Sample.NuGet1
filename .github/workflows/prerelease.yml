@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+-preview[0-9][0-9][0-9]"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set VERSION variable from tag
+        run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
+      - name: Pack
+        # run: dotnet pack --configuration Release /p:Version=${VERSION} --output .
+        run: dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=${VERSION} --output ${{ env.NuGetDirectory }}
+      - name: Push
+        # run: dotnet nuget push NuGet.Workflow.${VERSION}.nupkg --source https://nuget.pkg.github.com/acraven/index.json --api-key ${GITHUB_TOKEN}
+        run: |
+          foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
+              dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json
+          }
