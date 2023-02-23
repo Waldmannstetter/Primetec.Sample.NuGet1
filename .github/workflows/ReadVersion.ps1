@@ -1,6 +1,4 @@
-﻿$pathTest = "C:\Dev\Primetec.Sample.NuGet1\Primetec.Sample.NuGet1.Core\AssemblyInfo.cs"
-
-function GetVersion {
+﻿function GetVersion {
     Param
     (
         [Parameter(Mandatory = $true, Position = 0)]
@@ -18,7 +16,7 @@ function GetVersion {
     (Get-Content $path) | ForEach-Object {
         if($_ -match $pattern) {
             $result = [version]$matches[1]
-            
+
             if ($isRelease -eq $true) {
                 $major = ([version]$result).Major
                 $minor = ([version]$result).Minor
@@ -30,8 +28,6 @@ function GetVersion {
     }
 
     $Env:AssemblyVersion = $result
-    
+
     Write-Host $result
 }
-
-

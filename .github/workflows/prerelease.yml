@@ -18,7 +18,7 @@ jobs:
       - name: Get assembly version
         shell: pwsh
         run: |
-          .\ReadVersion.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $false
+          ./ReadVersion.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $false
         env:
           AssemblyVersion: ''
 
