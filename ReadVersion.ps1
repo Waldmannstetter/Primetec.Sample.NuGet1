@@ -15,14 +15,19 @@
 
     (Get-Content $path) | ForEach-Object {
         if($_ -match $pattern) {
-            $env:AssemblyVersion = [version]$matches[1]
-
             if ($isRelease -eq $true) {
                 $major = ([version]$result).Major
                 $minor = ([version]$result).Minor
                 $build = ([version]$result).Build
 
                 $env:AssemblyVersion = New-Object -TypeName System.Version -ArgumentList "$major.$minor.$build.0"
+            } else {
+                $major = ([version]$result).Major
+                $minor = ([version]$result).Minor
+                $build = ([version]$result).Build
+                $revision = ([version]$result).Revision
+
+                $env:AssemblyVersion = New-Object -TypeName System.Version -ArgumentList "$major.$minor.$build-preview.$revision"
             }
         }
     }
