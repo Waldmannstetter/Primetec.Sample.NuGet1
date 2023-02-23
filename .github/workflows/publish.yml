@@ -23,6 +23,18 @@ defaults:
     shell: pwsh
 
 jobs:
+  info:
+    - runs-on: ubuntu-latest
+      steps:
+      - name: Get files
+        shell: bash
+        run: |
+          for f in $(find src -name '*.csproj'); do
+            d=$(dirname  $f)
+            outputFolder=${{ github.workspace }}/${{ env.ARTIFACT }}/$d
+            ( cd "$d" && dotnet publish --no-self-contained -c $BUILD_CONFIGURATION -o $outputFolder )
+          done
+          
   create_nuget:
     runs-on: ubuntu-latest
     steps:
