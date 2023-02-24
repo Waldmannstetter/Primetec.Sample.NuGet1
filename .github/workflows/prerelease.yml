@@ -21,13 +21,15 @@ defaults:
 jobs:
   set_version:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.getversion.outputs.Version }}
     steps:
       - uses: actions/checkout@v3
-      - name: Set version
+      - id: getversion
         run: |
           $version = ./Get-Version.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $False
           echo "TEst $version"
-          echo "Version=$version" >> $Env:GITHUB_ENV
+          echo "Version=$version" >> $Env:GITHUB_OUTPUT
       - name: Get version
         run: |
           echo "$env:Version"
