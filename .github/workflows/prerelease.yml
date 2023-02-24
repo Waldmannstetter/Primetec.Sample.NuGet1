@@ -32,7 +32,7 @@ jobs:
       - name: Get version
         run: |
           echo "$env:Version"
-          echo "${{ env:Version }}"
+          echo "${{ env.Version }}"
 
   run_test:
     runs-on: ubuntu-latest
