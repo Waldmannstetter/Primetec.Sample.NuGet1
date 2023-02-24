@@ -37,7 +37,7 @@ function SetEnvVersion {
         }
     }
 
-    Write-Host $Env:Version
+    Write-Host $Env:Version >> $Env:GITHUB_ENV
 }
 
 SetEnvVersion $path $isRelease
