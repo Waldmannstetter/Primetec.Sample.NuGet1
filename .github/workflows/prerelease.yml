@@ -12,6 +12,7 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   NuGetDirectory: ${{ github.workspace }}/nuget
+  Version: ''
 
 defaults:
   run:
@@ -30,8 +31,6 @@ jobs:
   create_nuget:
     runs-on: ubuntu-latest
     needs: [ run_test ]
-    env:
-      Version: ''
     steps:
       - uses: actions/checkout@v3
       - name: Setup .NET
