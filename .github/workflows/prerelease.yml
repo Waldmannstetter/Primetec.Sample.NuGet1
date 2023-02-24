@@ -27,6 +27,7 @@ jobs:
       - name: Set version
         run: |
           $version = .\Get-Version.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $False
+          echo "$version"
           echo "Version=$version" >> $Env:GITHUB_ENV
       - name: Get version
         run: |
