@@ -12,6 +12,7 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   NuGetDirectory: ${{ github.workspace }}/nuget
+  AssemblyInfoFile: 'Primetec.Sample.NuGet1.Core/AssemblyInfo.cs'
   # Version: ''
 
 defaults:
@@ -22,19 +23,11 @@ jobs:
   set_version:
     runs-on: ubuntu-latest
     steps:
-      - name: Set the value
-        id: step_one
+      - uses: actions/checkout@v3
+      - name: Set version
         run: |
-          echo "action_state=yellow" >> $Env:GITHUB_ENV
-      - name: Use the value
-        id: step_two
-        run: |
-          echo "$env:action_state"
-          echo "{{ $env:action_state }}"
-          echo "{$env:action_state}"
-          echo "{{ $env.action_state }}"
-          echo "{$env.action_state}"
-          echo "$Env:action_state"
+          echo "Version=$(echo ./Get-Version.ps1 ./{{ env.AssemblyInfoFile }} $False)" >> $Env:GITHUB_ENV
+          echo "$env:Version"
 
   run_test:
     runs-on: ubuntu-latest
