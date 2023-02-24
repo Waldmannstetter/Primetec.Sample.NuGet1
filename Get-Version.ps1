@@ -37,7 +37,7 @@ function Get-Version {
         }
     }
 
-    Write-Host $version
+    return $version
 }
 
-Get-Version $path $isRelease
+return Get-Version $path $isRelease
