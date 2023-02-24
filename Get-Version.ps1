@@ -8,7 +8,7 @@
     [bool]$isRelease
 )
 
-function GetVersion {
+function Get-Version {
     Param
     (
         [Parameter(Mandatory = $true, Position = 0)]
@@ -40,4 +40,4 @@ function GetVersion {
     Write-Host $version
 }
 
-GetVersion $path $isRelease
+Get-Version $path $isRelease
