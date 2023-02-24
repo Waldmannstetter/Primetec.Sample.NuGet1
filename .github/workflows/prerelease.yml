@@ -23,6 +23,7 @@ jobs:
   set_version:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Set version
         run: |
           $version = .\Get-Version.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $False
