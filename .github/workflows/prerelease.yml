@@ -1,6 +1,9 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
 on:
+  create:
+    branches:
+      - '*'
   push:
     branches:
       - '*'
@@ -9,9 +12,12 @@ on:
       - '*'
 
 env:
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  ASSEMBLY_INFOFILE: 'Primetec.Sample.NuGet1.Core/AssemblyInfo.cs'
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
   DOTNET_NOLOGO: true
-  NuGetDirectory: ${{ github.workspace }}/nuget
+  NUGET_DIRECTORY: ${{ github.workspace }}/nuget
+  NUGET_APIKEY: ${{ secrets.NUGET_APIKEY }}
 
 defaults:
   run:
@@ -21,44 +27,58 @@ jobs:
   run_test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
       - name: Run tests
-        run: dotnet test --configuration Release
+        run: |
+          dotnet test --configuration Release
+
+  set_version:
+    needs: [ run_test ]
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.getversion.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - id: getversion
+        run: |
+          $version = ./Get-Version.ps1 ./${{ env.ASSEMBLY_INFOFILE }} $False
+          echo "version=$version" >> $Env:GITHUB_OUTPUT
 
   create_nuget:
+    needs: [ set_version ]
     runs-on: ubuntu-latest
-    needs: [ run_test ]
-    env:
-      Version: ''
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
       - run: |
-          ./SetVersion.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $false
-      - run: dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=${{ env.Version }} --output ${{ env.NuGetDirectory }}
-      - uses: actions/upload-artifact@v3
+          dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=${{needs.set_version.outputs.version}} --output ${{ env.NUGET_DIRECTORY }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
         with:
           name: nuget
           if-no-files-found: error
           retention-days: 7
-          path: ${{ env.NuGetDirectory }}/*.nupkg
+          path: ${{ env.NUGET_DIRECTORY }}/*.nupkg
 
   deploy:
-    runs-on: ubuntu-latest
     needs: [ create_nuget ]
-    # if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v3
+      - name: Download artifact
+        uses: actions/download-artifact@v3
         with:
           name: nuget
-          path: ${{ env.NuGetDirectory }}
-      - name: Setup .NET Core
+          path: ${{ env.NUGET_DIRECTORY }}
+      - name: Setup .NET
         uses: actions/setup-dotnet@v3
       - name: Publish NuGet package
         run: |
-          foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
-              dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json
+          foreach($file in (Get-ChildItem "${{ env.NUGET_DIRECTORY }}" -Recurse -Include *.nupkg)) {
+              dotnet nuget push $file --api-key "${{ env.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json
           }
