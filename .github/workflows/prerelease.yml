@@ -4,9 +4,6 @@ on:
   create:
     branches:
       - '*'
-  update:
-    branches:
-      - '*'
   push:
     branches:
       - '*'
