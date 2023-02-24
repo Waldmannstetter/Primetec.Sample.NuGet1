@@ -23,10 +23,11 @@ jobs:
   set_version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - name: Set version
         run: |
           echo "Version=1.0.0.0" >> $Env:GITHUB_ENV
+      - name: Get version
+        run: |
           echo "$env:Version"
 
   run_test:
