@@ -5,10 +5,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DCD93430-A2DB-42FB-8A8A-913AFBBE4EA3}"
 	ProjectSection(SolutionItems) = preProject
 		GlobalAssemblyInfo.props = GlobalAssemblyInfo.props
-		RELEASE-NOTES = RELEASE-NOTES
 		.github\workflows\ci.yml = .github\workflows\ci.yml
 		.github\workflows\prerelease.yml = .github\workflows\prerelease.yml
 		.github\workflows\release.yml = .github\workflows\release.yml
+		SetVersion.ps1 = SetVersion.ps1
 	EndProjectSection
 EndProject
 Global
