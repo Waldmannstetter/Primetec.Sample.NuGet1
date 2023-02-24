@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: Set version
         run: |
-          echo "Version=1.0.0.0" >> $Env:GITHUB_ENV
+          echo "Version=$(echo ./Get-Version.ps1 ./{{ env.AssemblyInfoFile }} $False)" >> $Env:GITHUB_ENV
       - name: Get version
         run: |
           echo "$env:Version"
@@ -48,7 +48,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
       - run: |
-          dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=$env:Version --output ${{ env.NuGetDirectory }}
+          dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=${{ env.Version }} --output ${{ env.NuGetDirectory }}
       - uses: actions/upload-artifact@v3
         with:
           name: nuget
