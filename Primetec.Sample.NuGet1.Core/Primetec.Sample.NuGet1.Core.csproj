@@ -11,6 +11,7 @@
         <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
         <PackageIcon>Primetec.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageVersion>$(Version)</PackageVersion>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -57,7 +58,10 @@
                 <_Parameter1>$(Version)</_Parameter1>
             </AssemblyAttributes>
             <AssemblyAttributes Include="AssemblyFileVersion">
-                <_Parameter1>$(FileVersion)</_Parameter1>
+                <_Parameter1>$(Version)</_Parameter1>
+            </AssemblyAttributes>
+            <AssemblyAttributes Include="AssemblyInformationalVersion">
+                <_Parameter1>$(Version)</_Parameter1>
             </AssemblyAttributes>
         </ItemGroup>
         <WriteCodeFragment Language="C#" OutputFile="./AssemblyInfo.cs" AssemblyAttributes="@(AssemblyAttributes)" />
@@ -65,7 +69,7 @@
 
     <Target Name="PrepareReleaseNotes" BeforeTargets="GenerateNuspec">
         <PropertyGroup>
-            <PackageDescription>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/CHANGELOG.md"))</PackageDescription>
+            <PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../CHANGELOG.md"))</PackageReleaseNotes>
         </PropertyGroup>
     </Target>
 
