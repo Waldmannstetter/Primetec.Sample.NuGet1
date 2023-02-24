@@ -12,12 +12,25 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   NuGetDirectory: ${{ github.workspace }}/nuget
+  AssemblyInfoFile: 'Primetec.Sample.NuGet1.Core/AssemblyInfo.cs'
+  # Version: ''
 
 defaults:
   run:
     shell: pwsh
 
 jobs:
+  set_version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set version
+        run: |
+          $version = .\Get-Version.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $False
+          echo "Version=$version" >> $Env:GITHUB_ENV
+      - name: Get version
+        run: |
+          echo "$env:Version"
+
   run_test:
     runs-on: ubuntu-latest
     steps:
@@ -25,20 +38,18 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
       - name: Run tests
-        run: dotnet test --configuration Release
+        run: |
+          dotnet test --configuration Release
 
   create_nuget:
     runs-on: ubuntu-latest
     needs: [ run_test ]
-    env:
-      Version: ''
     steps:
       - uses: actions/checkout@v3
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
       - run: |
-          ./SetVersion.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $false
-      - run: dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=${{ env.Version }} --output ${{ env.NuGetDirectory }}
+          dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=${{ env.Version }} --output ${{ env.NuGetDirectory }}
       - uses: actions/upload-artifact@v3
         with:
           name: nuget
