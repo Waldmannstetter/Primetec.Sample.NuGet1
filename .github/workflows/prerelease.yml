@@ -25,7 +25,7 @@ jobs:
       - name: Set the value
         id: step_one
         run: |
-          echo "action_state=yellow" >> $GITHUB_ENV
+          echo "action_state=yellow" >> $Env:GITHUB_ENV
       - name: Use the value
         id: step_two
         run: |
@@ -35,6 +35,13 @@ jobs:
           echo "{{ $env.action_state }}"
           echo "{$env.action_state}"
           echo "$Env:action_state"
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set version
+        run: |
+          echo "Version=0.0.0.0" >> $GITHUB_ENV
+          echo "Version=$(echo ./Get-Version.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $False)" >> $GITHUB_ENV
 
   run_test:
     runs-on: ubuntu-latest
