@@ -25,7 +25,7 @@ jobs:
       version: ${{ steps.get-version.outputs.Version }}
     steps:
       - uses: actions/checkout@v3
-      - name: Get version
+      - name: Set version
       - id: get-version
         run: |
           $version = ./Get-Version.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $False
