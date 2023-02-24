@@ -4,6 +4,9 @@ on:
   create:
     branches:
       - '*'
+  update:
+    branches:
+      - '*'
   push:
     branches:
       - '*'
@@ -18,7 +21,7 @@ env:
   DOTNET_NOLOGO: true
   NUGET_DIRECTORY: ${{ github.workspace }}/nuget
   NUGET_APIKEY: ${{ secrets.NUGET_APIKEY }}
-  IS_MAIN_BRANCH: ${{ github.ref }} == 'refs/heads/main'
+  IS_MAIN_BRANCH: '${{ github.ref }}' == 'refs/heads/main'
 
 defaults:
   run:
