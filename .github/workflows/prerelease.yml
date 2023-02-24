@@ -35,8 +35,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
-      - run: ./SetVersion.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $false
-      - run: dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=${env:Version} --output ${{ env.NuGetDirectory }}
+      - run: echo "env.Version=$(./GetVersion.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $false)" >> $GITHUB_ENV
+      - run: dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=${{ env.Version }} --output ${{ env.NuGetDirectory }}
       - uses: actions/upload-artifact@v3
         with:
           name: nuget
