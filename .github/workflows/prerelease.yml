@@ -50,10 +50,13 @@ jobs:
     needs: [ run_test ]
     steps:
       - uses: actions/checkout@v3
+      - name: Get version
+        run: |
+          $version = ./Get-Version.ps1 ./Primetec.Sample.NuGet1.Core/AssemblyInfo.cs $False
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
-      - run: |
-          dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=${{ env.Version }} --output ${{ env.NuGetDirectory }}
+        run: |
+          dotnet pack ./Primetec.Sample.NuGet1.Core/Primetec.Sample.NuGet1.Core.csproj --configuration Release /p:Version=$version --output ${{ env.NuGetDirectory }}
       - uses: actions/upload-artifact@v3
         with:
           name: nuget
