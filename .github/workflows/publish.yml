@@ -2,7 +2,7 @@
 
 on:
   workflow_dispatch:
-    
+ 
   create:
     branches:
       - '*'
