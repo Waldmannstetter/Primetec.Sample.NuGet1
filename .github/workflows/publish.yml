@@ -1,12 +1,14 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
 on:
+  workflow_dispatch:
+    
   create:
     branches:
       - '*'
   push:
     branches:
-      - '*'
+      - '**'
   pull_request:
     branches:
       - '*'
