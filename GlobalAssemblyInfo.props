@@ -8,6 +8,6 @@
         <Title>Test NuGet deploy &amp; publish</Title>
         <Description>Test NuGet deploy &amp; publish</Description>
         <Deterministic>False</Deterministic>
-        <Version>0.0.8.0</Version>
+        <Version>0.0.9.0</Version>
     </PropertyGroup>
 </Project>
